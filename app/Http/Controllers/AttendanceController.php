@@ -30,7 +30,7 @@ class AttendanceController extends Controller
 
         $studentIds = $students->pluck('id');
 
-        $attendances = Attendance::with('student')->latest()->whereIn('student_id', $studentIds)->get();
+        $attendances = Attendance::with('student')->latest('updated_at')->whereIn('student_id', $studentIds)->get();
 
         return view('pages.attendance.index', compact('students', 'attendances', 'classrooms'));
     }
@@ -63,16 +63,19 @@ class AttendanceController extends Controller
         ]);
 
         $statuses = $validated['status'];
+        Log::info(json_encode($statuses, JSON_PRETTY_PRINT));
 
         foreach ($statuses as $studentId => $status) {
+            if (empty($data['status'])) continue;
+
             Attendance::updateOrCreate(
                 [
                     'student_id' => $studentId,
                     'date' => now()->toDateString(),
                 ],
                 [
-                    'status' => $status,
-                    'description' => null,
+                    'status' => optional($status)['status'],
+                    'description' => optional($status)['description'],
                 ]
             );
         }

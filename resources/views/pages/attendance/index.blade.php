@@ -1,18 +1,18 @@
 @extends('layout.master')
 
-@section('header', 'Data Siswa')
+@section('header', 'Data Kehadiran Hari Ini')
 
 @section('content')
     <form method="get" class="w-full flex flex-row items-center justify-between mb-4 gap-2">
         <div class="flex flex-1 gap-2">
-            <input type="text" name="search" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" placeholder="Cari...">
+            <input type="text" name="search" id="search"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" placeholder="Cari...">
 
             <select id="class" name="class" onchange="this.form.submit()"
                 class="bg-gray-50 border w-36 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="">Pilih Kelas</option>
                 @foreach ($classrooms as $class)
-                    <option value="{{ $class->id }}"
-                        {{ request('class') == $class->id ? 'selected' : '' }}>
+                    <option value="{{ $class->id }}" {{ request('class') == $class->id ? 'selected' : '' }}>
                         {{ $class->name }}
                     </option>
                 @endforeach
@@ -21,7 +21,7 @@
 
         <a href="{{ route('attendances.create') }}"
             class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-3 py-2 text-sm me-2">
-            Data Kehadiran Hari Ini
+            Input Kehadiran
         </a>
     </form>
 
@@ -72,13 +72,19 @@
                             {{ $attendance->student->classroom->name }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $attendance->student->attendanceToday->status     }}
+                            {{ $attendance->student->attendanceToday->status }}
                         </td>
                         <td class="px-6 py-4">
                             {{ $attendance->student->attendanceToday->description ?? '-' }}
                         </td>
                     </tr>
                 @endforeach
+
+                @if ($attendances->isEmpty())
+                    <tr>
+                        <td colspan="7" class="px-6 py-4 text-center">Tidak ada data</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </div>

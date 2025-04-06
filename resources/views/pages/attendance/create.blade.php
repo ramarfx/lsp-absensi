@@ -41,6 +41,9 @@
                         <th scope="col" class="px-6 py-3">
                             Status
                         </th>
+                        <th scope="col" class="px-6 py-3">
+                            Keterangan
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,33 +63,36 @@
                                 <td class="px-6 py-2">
                                     {{ $student->classroom->name }}
                                 </td>
-                                <td class="px-6 py-2">
+                                <td class="py-2">
                                     <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                             <div class="flex items-center ps-3">
-                                                <input id="hadir-{{ $student->id }}" type="radio" value="Hadir" name="status[{{ $student->id }}]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Hadir' ? 'checked' : '' }}>
+                                                <input id="hadir-{{ $student->id }}" type="radio" value="Hadir" name="status[{{ $student->id }}][status]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Hadir' ? 'checked' : '' }}>
                                                 <label for="hadir-{{ $student->id }}" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Hadir</label>
                                             </div>
                                         </li>
                                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                                            <div class="flex items-center ps-3">
-                                                <input id="terlambat-{{ $student->id }}" type="radio" value="Terlambat" name="status[{{ $student->id }}]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Terlambat' ? 'checked' : '' }}>
+                                            <div class="flex items-center px-3">
+                                                <input id="terlambat-{{ $student->id }}" type="radio" value="Terlambat" name="status[{{ $student->id }}][status]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Terlambat' ? 'checked' : '' }}>
                                                 <label for="terlambat-{{ $student->id }}" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Terlambat</label>
                                             </div>
                                         </li>
                                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                             <div class="flex items-center ps-3">
-                                                <input id="sakit-{{ $student->id }}" type="radio" value="Sakit" name="status[{{ $student->id }}]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Sakit' ? 'checked' : '' }}>
+                                                <input id="sakit-{{ $student->id }}" type="radio" value="Sakit" name="status[{{ $student->id }}][status]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Sakit' ? 'checked' : '' }}>
                                                 <label for="sakit-{{ $student->id }}" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Sakit</label>
                                             </div>
                                         </li>
                                         <li class="w-full dark:border-gray-600">
                                             <div class="flex items-center ps-3">
-                                                <input id="izin-{{ $student->id }}" type="radio" value="Izin" name="status[{{ $student->id }}]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Izin' ? 'checked' : '' }}>
+                                                <input id="izin-{{ $student->id }}" type="radio" value="Izin" name="status[{{ $student->id }}][status]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" {{ optional($student->attendanceToday)->status == 'Izin' ? 'checked' : '' }}>
                                                 <label for="izin-{{ $student->id }}" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Izin</label>
                                             </div>
                                         </li>
                                     </ul>
+                                </td>
+                                <td class="px-6 py-2">
+                                    <input type="text" name="status[{{ $student->id }}][description]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" placeholder="Keterangan" value="{{  optional($student->attendanceToday)->description }}">
                                 </td>
                             </tr>
                         @endforeach
