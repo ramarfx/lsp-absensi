@@ -59,7 +59,9 @@
                 @enderror
 
                 @yield('content')
+
             </div>
+            @include('layout.partials.footer')
         </div>
     </main>
 

@@ -22,6 +22,10 @@
         @yield('content')
     </main>
 
+    <div class="container pb-5">
+        <h5 class="text-base font-medium text-gray-500">2025. SMKN 46 JAKARTA</h5>
+    </div>
+
     @yield('script')
     <script src="node_modules/flowbite/dist/flowbite.min.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> --}}
