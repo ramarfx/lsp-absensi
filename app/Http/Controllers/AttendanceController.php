@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attendance;
 use App\Models\Student;
+use App\Models\Classroom;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
@@ -13,10 +15,42 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $students = Student::with('attendances')->get();
-        $attendances = Attendance::with('student')->get();
+        $classId = request()->query('class');
 
-        return view('pages.attendance.index', compact('students', 'attendances'));
+        $classrooms = Classroom::all();
+        $students = Student::with('attendances', 'attendanceToday')->get();
+
+        if ($classId) {
+            $students = Student::with('attendances', 'attendanceToday')
+                ->where('classroom_id', $classId)
+                ->get();
+        } else {
+            $students = Student::with('attendances', 'attendanceToday')->get();
+        }
+
+        $studentIds = $students->pluck('id');
+
+        $attendances = Attendance::with('student')->latest()->whereIn('student_id', $studentIds)->get();
+
+        return view('pages.attendance.index', compact('students', 'attendances', 'classrooms'));
+    }
+
+    public function create(Request $request)
+    {
+        $classId = $request->query('class');
+
+        $classrooms = Classroom::all();
+        $filteredClassroom = Classroom::with('students.attendanceToday');
+
+        if ($classId) {
+            $filteredClassroom = $filteredClassroom->find($classId);
+        } else {
+            $filteredClassroom = $filteredClassroom->first();
+        }
+
+        $students = $filteredClassroom->students;
+
+        return view('pages.attendance.create', compact('classrooms', 'students'));
     }
 
     /**
@@ -24,7 +58,26 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'status' => 'array'
+        ]);
+
+        $statuses = $validated['status'];
+
+        foreach ($statuses as $studentId => $status) {
+            Attendance::updateOrCreate(
+                [
+                    'student_id' => $studentId,
+                    'date' => now()->toDateString(),
+                ],
+                [
+                    'status' => $status,
+                    'description' => null,
+                ]
+            );
+        }
+
+        return redirect()->route('attendances.index')->with('success', 'Berhasil input kehadiran');
     }
 
     /**

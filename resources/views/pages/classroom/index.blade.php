@@ -30,13 +30,13 @@
                 @foreach ($classrooms as $class)
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" class="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $loop->iteration }}
                         </th>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-1">
                             {{ $class->name }}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-1">
                             <a href="{{ route('class.edit', $class) }}" type="button"
                                 class="focus:outline-none text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg px-3 py-2 text-sm me-2">
                                 <i class="bx bxs-edit"></i>

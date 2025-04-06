@@ -13,8 +13,20 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
-        return view('pages.student.index', compact('students'));
+        $classId = request()->query('class');
+        $classrooms  = Classroom::all();
+
+        $filteredClassroom = Classroom::with('students.attendanceToday');
+
+        if ($classId) {
+            $filteredClassroom = $filteredClassroom->find($classId);
+        } else {
+            $filteredClassroom = $filteredClassroom->first();
+        }
+
+        $students = $filteredClassroom->students;
+
+        return view('pages.student.index', compact('students', 'classrooms'));
     }
 
     public function create()

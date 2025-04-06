@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->enum('status', ['Hadir', 'Sakit', 'Izin', 'Alpha']);
+            $table->enum('status', ['Hadir', 'Terlambat', 'Sakit', 'Izin', 'Alpha']);
             $table->string('description', 120)->nullable();
             $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
             $table->timestamps();

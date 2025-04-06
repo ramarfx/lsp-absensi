@@ -13,7 +13,7 @@ class ClassSeeder extends Seeder
      */
     public function run(): void
     {
-        $class = ['I', 'II', 'III'];
+        $class = ['X', 'XI', 'XII'];
         $jurusan = ['RPL', 'DKV', 'AKL', 'OTKP', 'BDP'];
 
         for ($i=0; $i < count($jurusan); $i++) {
