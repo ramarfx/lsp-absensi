@@ -22,7 +22,7 @@
     @include('layout.partials.sidebar')
 
     <main>
-        <div class="p-4 sm:ml-64">
+        <div class="p-4 pb-8 sm:ml-64 min-h-screen relative">
             <div class="p-4 mt-14">
                 <h1 class="font-bold text-2xl mb-4">@yield('header')</h1>
                 @if (session()->has('error'))
@@ -61,6 +61,7 @@
                 @yield('content')
 
             </div>
+
             @include('layout.partials.footer')
         </div>
     </main>

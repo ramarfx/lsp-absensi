@@ -19,7 +19,7 @@
     <form method="get" class="flex flex-col md:flex-row items-stretch gap-3 mb-6">
         <input type="text" name="search" id="search"
             class="flex-1 p-2.5 rounded-lg border border-gray-300 text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Cari nama atau NIS...">
+            placeholder="Cari nama atau NIS..." value="{{ request('search') }}">
 
         <select id="class" name="class" onchange="this.form.submit()"
             class="w-full md:w-44 p-2.5 rounded-lg border border-gray-300 text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-blue-200">
@@ -60,13 +60,13 @@
                     @endphp
                     <tr
                         class="bg-white border-b hover:bg-blue-50 transition dark:bg-gray-800 dark:border-gray-700">
-                        <td class="px-6 py-4">{{ $loop->iteration }}</td>
-                        <td class="px-6 py-4">{{ $attendance->student->nis ?? '' }}</td>
-                        <td class="px-6 py-4">{{ $attendance->student->name }}</td>
-                        <td class="px-6 py-4">{{ $attendance->student->gender ? 'L' : 'P' }}</td>
-                        <td class="px-6 py-4">{{ $attendance->student->classroom->name }}</td>
-                        <td class="px-6 py-4 {{ $statusColor }}">{{ $status }}</td>
-                        <td class="px-6 py-4">{{ $attendance->student->attendanceToday->description ?? '-' }}</td>
+                        <td class="px-6 py-3">{{ $loop->iteration }}</td>
+                        <td class="px-6 py-3">{{ $attendance->student->nis ?? '' }}</td>
+                        <td class="px-6 py-3">{{ $attendance->student->name }}</td>
+                        <td class="px-6 py-3">{{ $attendance->student->gender ? 'L' : 'P' }}</td>
+                        <td class="px-6 py-3">{{ $attendance->student->classroom->name }}</td>
+                        <td class="px-6 py-3 {{ $statusColor }}">{{ $status }}</td>
+                        <td class="px-6 py-3">{{ $attendance->student->attendanceToday->description ?? '-' }}</td>
                     </tr>
                 @empty
                     <tr>
@@ -75,6 +75,10 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    <div class="mt-2">
+        {{ $attendances->appends(request()->query())->links() }}
     </div>
 </div>
 @endsection

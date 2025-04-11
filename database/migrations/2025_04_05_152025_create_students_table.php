@@ -16,9 +16,7 @@ return new class extends Migration
             $table->string('name', 150);
             $table->string('nis', 16);
             $table->foreignId('classroom_id')->constrained('classrooms')->onDelete('cascade');
-            //0: cewe, 1: cowo
             $table->boolean('gender');
-            // $table->foreignId('attendance_id')->nullable()->constrained('attendances')->onDelete('cascade')->nullOnDelete();
             $table->timestamps();
         });
     }

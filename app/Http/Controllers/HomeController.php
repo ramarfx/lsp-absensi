@@ -29,12 +29,8 @@ class HomeController extends Controller
 
         $studentIds = $students->pluck('id');
 
-        $attendances = Attendance::with('student')->latest('updated_at')->whereIn('student_id', $studentIds)->whereToday('date')->get();
+        $attendances = Attendance::with('student')->latest('updated_at')->whereIn('student_id', $studentIds)->whereToday('date')->paginate(10);
 
-        $lateStudents = Attendance::where('status', 'Terlambat')->whereToday('date')->count();
-        $presentStudents = Attendance::where('status', 'Hadir')->orWhere('status', 'Terlambat')->whereToday('date')->count();
-        $totalStudents = Student::count();
-
-        return view('home', compact('students', 'attendances', 'classrooms', 'lateStudents', 'presentStudents', 'totalStudents'));
+        return view('home', compact('students', 'attendances', 'classrooms'));
     }
 }
