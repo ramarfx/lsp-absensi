@@ -16,13 +16,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="relative min-h-screen w-full">
 
     <main>
         @yield('content')
     </main>
 
-    <div class="container pb-5">
+    <div class="container pb-5 pt-20 absolute bottom-0 text-center left-1/2 -translate-x-1/2">
         <h5 class="text-base font-medium text-gray-500">2025. SMKN 46 JAKARTA</h5>
     </div>
 

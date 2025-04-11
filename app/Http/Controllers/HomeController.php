@@ -29,7 +29,7 @@ class HomeController extends Controller
 
         $studentIds = $students->pluck('id');
 
-        $attendances = Attendance::with('student')->latest('updated_at')->whereIn('student_id', $studentIds)->get();
+        $attendances = Attendance::with('student')->latest('updated_at')->whereIn('student_id', $studentIds)->whereToday('date')->get();
 
         $lateStudents = Attendance::where('status', 'Terlambat')->whereToday('date')->count();
         $presentStudents = Attendance::where('status', 'Hadir')->orWhere('status', 'Terlambat')->whereToday('date')->count();

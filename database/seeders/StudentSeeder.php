@@ -14,19 +14,38 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $classrooms = Classroom::all();
+        $this->seedStudentsFromFile('xii_dkv.php', 'XII-DKV');
+        $this->seedStudentsFromFile('xii_rpl.php', 'XII-RPL');
+    }
 
-        foreach ($classrooms as $classroom) {
-            for ($i=0; $i < 10; $i++) {
-                Student::create([
-                    'name' => fake()->name(),
-                    'nis' => fake()->numberBetween(100000, 999999),
-                    'gender' => fake()->numberBetween(0, 1),
-                    'classroom_id' => $classroom->id,
-                    // 'attendance_id' => null
-                ]);
-            }
+    protected function seedStudentsFromFile(string $filename, string $classroomName): void
+    {
+        $names = include database_path("data/{$filename}");
+
+        $classroom = Classroom::where('name', $classroomName)->first();
+
+        if (!$classroom) {
+            $this->command->error("Classroom '{$classroomName}' not found.");
+            return;
         }
 
+        foreach ($names as $name) {
+            $name = $this->normalizeName($name);
+            Student::create([
+                'name' => $name,
+                'nis' => fake()->unique()->numberBetween(100000, 999999),
+                'gender' => fake()->numberBetween(0, 1), // bisa diganti logika tebakan
+                'classroom_id' => $classroom->id,
+            ]);
+        }
+
+        $this->command->info("Seeded " . count($names) . " students for classroom '{$classroomName}'.");
+    }
+
+    protected function normalizeName(string $name): string
+    {
+        return collect(explode(' ', strtolower($name)))
+            ->map(fn($word) => ucfirst($word))
+            ->implode(' ');
     }
 }

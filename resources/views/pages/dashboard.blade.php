@@ -8,22 +8,22 @@
 
         <div class="grid grid-cols-3 grid-rows-1 gap-4">
                 <div
-                    class="block max-w-sm px-6 py-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    class="block max-w-sm px-6 py-4 bg-blue-600 text-white border border-gray-200 rounded-lg shadow-sm">
 
-                    <p class="font-normal text-lg text-gray-700 dark:text-gray-400 mb-4">Siswa Terlambat</p>
-                    <h5 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $lateStudents }}</h5>
+                    <p class="font-normal text-lg mb-4">Siswa Terlambat</p>
+                    <h5 class="mb-2 text-4xl font-bold tracking-tight dark:text-white">{{ $lateStudents }}</h5>
                 </div>
                 <div
-                    class="block max-w-sm px-6 py-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    class="block max-w-sm px-6 py-4 bg-blue-600 text-white border border-gray-200 rounded-lg shadow-sm">
 
-                    <p class="font-normal text-lg text-gray-700 dark:text-gray-400 mb-4">Kehadiran Hari Ini</p>
-                    <h5 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $presentStudents }}</h5>
+                    <p class="font-normal text-lg mb-4">Kehadiran Hari Ini</p>
+                    <h5 class="mb-2 text-4xl font-bold tracking-tight dark:text-white">{{ $presentStudents }}</h5>
                 </div>
                 <div
-                    class="block max-w-sm px-6 py-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                    class="block max-w-sm px-6 py-4 bg-blue-600 text-white border border-gray-200 rounded-lg shadow-sm">
 
-                    <p class="font-normal text-lg text-gray-700 dark:text-gray-400 mb-4">Total Siswa</p>
-                    <h5 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $totalStudents }}</h5>
+                    <p class="font-normal text-lg mb-4">Total Siswa</p>
+                    <h5 class="mb-2 text-4xl font-bold tracking-tight dark:text-white">{{ $totalStudents }}</h5>
                 </div>
         </div>
 
@@ -52,8 +52,8 @@
         </form>
 
         <div class="relative overflow-x-auto border sm:rounded-lg">
-            <table id="table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:text-gray-400">
+            <table id="table" class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             No.

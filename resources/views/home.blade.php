@@ -1,96 +1,80 @@
 @extends('layout.guest')
 
 @section('content')
-    <div class="container">
-        <div class="py-5 flex justify-end">
-            <a href="{{ route('login') }}"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">Masuk</a>
-        </div>
+<div class="container">
+    <div class="py-5 flex justify-between items-center">
+        <h1 class="text-3xl font-bold flex items-center gap-2 text-gray-800">
+            <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 17v-6h13M3 17V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v10M7 21h10"></path>
+            </svg>
+            Absensin
+        </h1>
 
-        <div class="min-h-[83vh]">
-            <h1 class="text-3xl font-bold text-center mb-4">Kehadiran Hari Ini</h1>
-
-            <form method="get" class="w-full flex flex-row items-center justify-between mb-4 gap-2">
-                <div class="flex flex-1 gap-2">
-                    <input type="text" name="search" id="search"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" placeholder="Cari...">
-
-                    <select id="class" name="class" onchange="this.form.submit()"
-                        class="bg-gray-50 border w-36 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="">Pilih Kelas</option>
-                        @foreach ($classrooms as $class)
-                            <option value="{{ $class->id }}" {{ request('class') == $class->id ? 'selected' : '' }}>
-                                {{ $class->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </form>
-
-            <div class="relative overflow-x-auto border sm:rounded-lg">
-                <table id="table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                No.
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                NIS
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Nama
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Gender
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Kelas
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Status
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Keterangan
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($attendances as $attendance)
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $loop->iteration }}
-                                </th>
-                                <td class="px-6 py-4">
-                                    {{ $attendance->student->nis ?? '' }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $attendance->student->name }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $attendance->student->gender ? 'L' : 'P' }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $attendance->student->classroom->name }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $attendance->student->attendanceToday->status }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $attendance->student->attendanceToday->description ?? '-' }}
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        @if ($attendances->isEmpty())
-                            <tr>
-                                <td colspan="7" class="px-6 py-4 text-center">Tidak ada data</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <a href="{{ route('login') }}"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 transition-all">Masuk</a>
     </div>
+
+    <form method="get" class="flex flex-col md:flex-row items-stretch gap-3 mb-6">
+        <input type="text" name="search" id="search"
+            class="flex-1 p-2.5 rounded-lg border border-gray-300 text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Cari nama atau NIS...">
+
+        <select id="class" name="class" onchange="this.form.submit()"
+            class="w-full md:w-44 p-2.5 rounded-lg border border-gray-300 text-gray-900 shadow-sm focus:outline-none focus:ring focus:ring-blue-200">
+            <option value="">Pilih Kelas</option>
+            @foreach ($classrooms as $class)
+                <option value="{{ $class->id }}" {{ request('class') == $class->id ? 'selected' : '' }}>
+                    {{ $class->name }}
+                </option>
+            @endforeach
+        </select>
+    </form>
+
+    <div class="relative overflow-x-auto shadow-lg sm:rounded-lg">
+        <table id="table" class="w-full text-sm text-left text-gray-700">
+            <thead class="text-xs text-white uppercase bg-blue-700">
+                <tr>
+                    <th class="px-6 py-3">No.</th>
+                    <th class="px-6 py-3">NIS</th>
+                    <th class="px-6 py-3">Nama</th>
+                    <th class="px-6 py-3">Gender</th>
+                    <th class="px-6 py-3">Kelas</th>
+                    <th class="px-6 py-3">Status</th>
+                    <th class="px-6 py-3">Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($attendances as $attendance)
+                    @php
+                        $status = $attendance->student->attendanceToday->status ?? '-';
+                        $statusColor = match($status) {
+                            'Hadir' => 'text-green-600 font-semibold',
+                            'Izin' => 'text-blue-600 font-semibold',
+                            'Sakit' => 'text-rose-500 font-semibold',
+                            'Terlambat' => 'text-yellow-600 font-semibold',
+                            'Alpha' => 'text-red-600 font-semibold',
+                            default => 'text-gray-500',
+                        };
+                    @endphp
+                    <tr
+                        class="bg-white border-b hover:bg-blue-50 transition dark:bg-gray-800 dark:border-gray-700">
+                        <td class="px-6 py-4">{{ $loop->iteration }}</td>
+                        <td class="px-6 py-4">{{ $attendance->student->nis ?? '' }}</td>
+                        <td class="px-6 py-4">{{ $attendance->student->name }}</td>
+                        <td class="px-6 py-4">{{ $attendance->student->gender ? 'L' : 'P' }}</td>
+                        <td class="px-6 py-4">{{ $attendance->student->classroom->name }}</td>
+                        <td class="px-6 py-4 {{ $statusColor }}">{{ $status }}</td>
+                        <td class="px-6 py-4">{{ $attendance->student->attendanceToday->description ?? '-' }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="px-6 py-4 text-center text-gray-500">Tidak ada data</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection

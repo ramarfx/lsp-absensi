@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
         $studentIds = $students->pluck('id');
 
-        $attendances = Attendance::with('student')->latest('updated_at')->whereIn('student_id', $studentIds)->paginate(10);
+        $attendances = Attendance::with('student')->latest('updated_at')->whereIn('student_id', $studentIds)->whereToday('date')->paginate(10);
 
         $lateStudents = Attendance::where('status', 'Terlambat')->whereToday('date')->count();
         $presentStudents = Attendance::where('status', 'Hadir')->orWhere('status', 'Terlambat')->whereToday('date')->count();

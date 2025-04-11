@@ -54,6 +54,17 @@
             </thead>
             <tbody>
                 @foreach ($attendances as $attendance)
+                    @php
+                        $status = $attendance->student->attendanceToday->status ?? '-';
+                        $statusColor = match ($status) {
+                            'Hadir' => 'text-green-600 font-semibold',
+                            'Izin' => 'text-blue-600 font-semibold',
+                            'Sakit' => 'text-rose-500 font-semibold',
+                            'Terlambat' => 'text-yellow-600 font-semibold',
+                            'Alpha' => 'text-red-600 font-semibold',
+                            default => 'text-gray-500',
+                        };
+                    @endphp
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -71,8 +82,8 @@
                         <td class="px-6 py-4">
                             {{ $attendance->student->classroom->name }}
                         </td>
-                        <td class="px-6 py-4">
-                            {{ $attendance->student->attendanceToday->status }}
+                        <td class="px-6 py-4 {{ $statusColor }}">
+                            {{ $status }}
                         </td>
                         <td class="px-6 py-4">
                             {{ $attendance->student->attendanceToday->description ?? '-' }}
